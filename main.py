@@ -128,12 +128,10 @@ async def lnurlp(username: str, amount: int = Query(None), comment: str = Query(
         raise Exception("user not found")
 
     if amount is None:
-        return JSONResponse(
-            LnurlpFirstResponse(
-                callback=urllib.parse.urljoin(
-                    settings.lnurl_host, f"/.well-known/lnurlp/{username}"
-                )
-            ).json()
+        return LnurlpFirstResponse(
+            callback=urllib.parse.urljoin(
+                settings.lnurl_host, f"/.well-known/lnurlp/{username}"
+            )
         )
 
     invoice = await wallet.request_mint(amount)
