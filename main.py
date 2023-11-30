@@ -7,6 +7,8 @@ from typing import Dict
 
 import httpx
 from fastapi import APIRouter, Query
+from fastapi.responses import JSONResponse
+
 from loguru import logger
 
 from base import LnurlpFirstResponse, LnurlpSecondResponse, PendingInvoice
@@ -126,10 +128,12 @@ async def lnurlp(username: str, amount: int = Query(None), comment: str = Query(
         raise Exception("user not found")
 
     if amount is None:
-        return LnurlpFirstResponse(
-            callback=urllib.parse.urljoin(
-                settings.lnurl_host, f"/.well-known/lnurlp/{username}"
-            )
+        return JSONResponse(
+            LnurlpFirstResponse(
+                callback=urllib.parse.urljoin(
+                    settings.lnurl_host, f"/.well-known/lnurlp/{username}"
+                )
+            ).json()
         )
 
     invoice = await wallet.request_mint(amount)
