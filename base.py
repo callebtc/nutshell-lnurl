@@ -23,6 +23,7 @@ class LnurlpFirstResponse(BaseModel):
     tag: str = "payRequest"
     minSendable: int = 1000
     maxSendable: int = 1000000
+    metadata: str = ""
 
 
 class LnurlpSecondResponse(BaseModel):
