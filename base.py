@@ -23,7 +23,7 @@ class LnurlpFirstResponse(BaseModel):
     tag: str = "payRequest"
     minSendable: int = 1000
     maxSendable: int = 1000000
-    metadata: str = '[["text/plain", "lorem ipsum blah blah"]]'
+    metadata: str = '[["text/plain", "This is a Cashu-LNURL bridge. A Cashu token will be sent to the recipient\'s nostr pubkey."]]'
     commentAllowed: int = 0
 
 
