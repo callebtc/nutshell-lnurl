@@ -138,7 +138,8 @@ async def lnurlp(username: str, amount: int = Query(None), comment: str = Query(
                 settings.lnurl_host, f"/.well-known/lnurlp/{username}"
             )
         )
-
+    if len(invoices) > 100:
+        return
     invoice = await wallet.request_mint(amount)
     pubkey = users[username] if not username.startswith("npub") else username
     pending_invoice = PendingInvoice(
