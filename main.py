@@ -127,7 +127,9 @@ async def lnurlp(username: str, amount: int = Query(None), comment: str = Query(
     if amount:
         amount = amount // 1000
 
-    if username.lower() not in [u.lower() for u in users.keys()]:
+    if not username.startswith("npub") and username.lower() not in [
+        u.lower() for u in users.keys()
+    ]:
         raise Exception("user not found")
 
     if amount is None:
@@ -138,7 +140,7 @@ async def lnurlp(username: str, amount: int = Query(None), comment: str = Query(
         )
 
     invoice = await wallet.request_mint(amount)
-    pubkey = users[username]
+    pubkey = users[username] if not username.startswith("npub") else username
     pending_invoice = PendingInvoice(
         invoice=invoice,
         username=username,
