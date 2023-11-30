@@ -80,17 +80,17 @@ async def invoice_checker(invoice: PendingInvoice):
     paid = False
     proofs = []
     while not paid:
-        if time.time() - invoice.created > 60 * 10:
-            await asyncio.sleep(30)
-        elif time.time() - invoice.created > 60 * 60:
+        if time.time() - invoice.created > 60 * 60:
             del invoices[invoice.invoice.id]
             store_invoices()
             logger.warning(
                 f"Invoice {invoice.invoice.id} has exceeded timeout. Deleting."
             )
             return
+        if time.time() - invoice.created > 60 * 10:
+            await asyncio.sleep(30)
         else:
-            await asyncio.sleep(2)
+            await asyncio.sleep(5)
 
         try:
             proofs = await wallet.mint(invoice.amount, id=invoice.invoice.id)
