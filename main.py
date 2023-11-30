@@ -53,7 +53,6 @@ async def startup_server():
     try:
         invoices = pickle.load(open(settings.invoices_db, "rb"))
         logger.info(f"Loaded {len(invoices)} invoices from file")
-        logger.debug(invoices)
     except Exception:
         logger.info("No invoices.pickle file found")
     for invoice in invoices.values():
@@ -63,7 +62,7 @@ async def startup_server():
 async def start_wallet():
     global wallet
     wallet = await Wallet.with_db(
-        settings.mint_url,
+        url=settings.mint_url,
         db=settings.cashu_db_path,
     )
     await wallet.load_mint()
