@@ -87,7 +87,7 @@ async def invoice_checker(invoice: PendingInvoice):
                 f"Invoice {invoice.invoice.id} has exceeded timeout. Deleting."
             )
             return
-        if time.time() - invoice.created > 60 * 10:
+        if time.time() - invoice.created > 60:
             await asyncio.sleep(30)
         else:
             await asyncio.sleep(5)
