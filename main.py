@@ -124,6 +124,9 @@ async def invoice_checker(invoice: PendingInvoice):
 async def lnurlp(username: str, amount: int = Query(None), comment: str = Query(None)):
     global users
     username = username.lower()
+    if amount:
+        amount = amount // 1000
+
     if username.lower() not in [u.lower() for u in users.keys()]:
         raise Exception("user not found")
 
