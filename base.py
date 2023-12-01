@@ -1,4 +1,4 @@
-from typing import Optional
+from typing import Optional, List
 
 from pydantic import BaseModel
 
@@ -29,5 +29,6 @@ class LnurlpFirstResponse(BaseModel):
 
 class LnurlpSecondResponse(BaseModel):
     pr: str
+    routes: List = []
     status: str = "OK"
     successAction: dict = {"tag": "message", "message": "Payment forwarded."}

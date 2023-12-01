@@ -58,6 +58,8 @@ async def startup_server():
     except Exception:
         logger.info("No invoices.pickle file found")
     for invoice in invoices.values():
+        await asyncio.sleep(5)
+        logger.debug(f"Dispatching task for invoice {invoice.invoice.id}")
         asyncio.create_task(invoice_checker(invoice))
 
 
